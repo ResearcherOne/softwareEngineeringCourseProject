@@ -1,0 +1,25 @@
+{
+  "name": "dtgp-backend",
+  "version": "0.0.0",
+  "description": "backend of dragon tale game project",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ResearcherOne/softwareEngineeringCourseProject.git"
+  },
+  "keywords": [
+    "cs320"
+  ],
+  "author": "birkan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ResearcherOne/softwareEngineeringCourseProject/issues"
+  },
+  "homepage": "https://github.com/ResearcherOne/softwareEngineeringCourseProject#readme"
+}
