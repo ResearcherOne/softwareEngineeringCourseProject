@@ -7,11 +7,12 @@ public class GameStateManager {
 	private GameState[] gameStates;
 	private int currentState;
 	
-	public static final int NUMGAMESTATES = 4;
+	public static final int NUMGAMESTATES = 5;
 	public static final int MENUSTATE = 0;
 	public static final int LEVEL1STATE = 1;
 	public static final int GAMEOVERSTATE = 2;
 	public static final int LOADINGSTATE = 3;
+	public static final int BOSSSTATE = 4;
 	public GameStateManager() {
 		
 		gameStates = new GameState[NUMGAMESTATES];
@@ -30,6 +31,8 @@ public class GameStateManager {
 			gameStates[state] = new GameOverState(this);
 		if(state == LOADINGSTATE)
 			gameStates[state] = new LoadingState(this);
+		if(state == BOSSSTATE)
+			gameStates[state] = new BossState(this);
 	}
 	
 	private void unloadState(int state) {

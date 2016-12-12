@@ -1,6 +1,10 @@
 package Audio;
 
+import java.io.File;
+import java.net.URL;
+
 import javax.sound.sampled.*;
+
 
 public class AudioPlayer {
 	
@@ -9,14 +13,30 @@ public class AudioPlayer {
 	public AudioPlayer(String s) {
 		
 		try {
+			//DocFlavor.URL urlToHot = this.getClass().getResource("resource/level1-1.wav");
+			//clip.open(AudioSystem.getAudioInputStream(getClass().getResourceAsStream("Music/level1-1.wav")));
+			//System.out.println(urlToHot);
+
+			//File f = new File("C:\\Users\\qual\\workspace\\softwareEngineeringCourseProject\\Resources\\Music\\level1-1.wav");
+
+			//File f = new File("C:\\Users\\qual\\workspace\\softwareEngineeringCourseProject\\Resources\\Music\\level1-1.wav");
+
+			//InputStream input = (InputStream) getClass().getResourceAsStream(s);
+
 			
-			AudioInputStream ais =
-				AudioSystem.getAudioInputStream(
-					getClass().getResourceAsStream(
-						s
-					)
-				);
-			AudioFormat baseFormat = ais.getFormat();
+			
+			//File f = new File(".Resources/Music/level1-1.wav");
+			
+			
+			//URL url = getClass().getResource("/Music/level1-1.wav");
+			//File f = new File(url.toURI());
+			
+			URL url = getClass().getResource(s);
+			File f = new File(url.getPath());
+			
+	        AudioInputStream audio = AudioSystem.getAudioInputStream(f);
+	        AudioFormat format = audio.getFormat();
+	        AudioFormat baseFormat = audio.getFormat();
 			AudioFormat decodeFormat = new AudioFormat(
 				AudioFormat.Encoding.PCM_SIGNED,
 				baseFormat.getSampleRate(),
@@ -28,15 +48,14 @@ public class AudioPlayer {
 			);
 			AudioInputStream dais =
 				AudioSystem.getAudioInputStream(
-					decodeFormat, ais);
+					f);
 			clip = AudioSystem.getClip();
 			clip.open(dais);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		
+	    } catch (Exception E) {
+	        System.out.println("Exception: "+E.getMessage());
+	    }
 	}
+
 	
 	public void play() {
 		if(clip == null) return;
