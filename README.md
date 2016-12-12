@@ -3,6 +3,7 @@
 ~~i) Karakter ölüm ekranı yok~~
 
 ~~• Karakter boşluğa düşerse oyun duruyor~~
+
 ~~• Karakter can azlığından ölünce birşey olmuyor~~
 
 ii) SRS-DTGP-003, Scoring System, v0.1
