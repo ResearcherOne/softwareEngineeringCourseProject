@@ -7,9 +7,10 @@ Software Architecture
 			/postscore
 				username gameScore clientId
 	mongoModule.js
-		saveScore
+		saveScore()
 			isClientIdExist
-		getTopTenList
+		getTopTenList()
+		clearAllScores()
 	utility.js
 		getCurrentDate
 		
