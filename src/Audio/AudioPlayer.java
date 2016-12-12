@@ -13,24 +13,6 @@ public class AudioPlayer {
 	public AudioPlayer(String s) {
 		
 		try {
-			//DocFlavor.URL urlToHot = this.getClass().getResource("resource/level1-1.wav");
-			//clip.open(AudioSystem.getAudioInputStream(getClass().getResourceAsStream("Music/level1-1.wav")));
-			//System.out.println(urlToHot);
-
-			//File f = new File("C:\\Users\\qual\\workspace\\softwareEngineeringCourseProject\\Resources\\Music\\level1-1.wav");
-
-			//File f = new File("C:\\Users\\qual\\workspace\\softwareEngineeringCourseProject\\Resources\\Music\\level1-1.wav");
-
-			//InputStream input = (InputStream) getClass().getResourceAsStream(s);
-
-			
-			
-			//File f = new File(".Resources/Music/level1-1.wav");
-			
-			
-			//URL url = getClass().getResource("/Music/level1-1.wav");
-			//File f = new File(url.toURI());
-			
 			URL url = getClass().getResource(s);
 			File f = new File(url.getPath());
 			

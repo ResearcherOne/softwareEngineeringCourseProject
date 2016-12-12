@@ -78,11 +78,11 @@ public class Player extends MapObject {
 		
 		facingRight = true;
 		
-		health = maxHealth = 5;
+		health = maxHealth = 25;
 		fire = maxFire = 2500;
 		
-		fireCost = 200;
-		fireBallDamage = 5;
+		fireCost = 100;
+		fireBallDamage = 2;
 		fireBalls = new ArrayList<FireBall>();
 		
 		scratchDamage = 8;
