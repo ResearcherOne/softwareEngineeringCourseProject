@@ -16,7 +16,7 @@ public class Level1State extends GameState {
 	private Background bg;
 	
 	private Player player;
-	
+	private Door d ;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Explosion> explosions;
 	
@@ -48,7 +48,7 @@ public class Level1State extends GameState {
 		
 		hud = new HUD(player);
 		
-		bgMusic = new AudioPlayer("/Music/level1-1.mp3");
+		bgMusic = new AudioPlayer("/Music/level1-1.mp3");		
 		bgMusic.play();
 		
 	}
@@ -56,7 +56,9 @@ public class Level1State extends GameState {
 	private void populateEnemies() {
 		
 		enemies = new ArrayList<Enemy>();
-		
+		 d =new Door(tileMap);
+		d.setPosition(3145,180);
+	
 		Slugger s;
 		Point[] points = new Point[] {
 			new Point(200, 100),
@@ -64,6 +66,7 @@ public class Level1State extends GameState {
 			new Point(1525, 200),
 			new Point(1680, 200),
 			new Point(1800, 200)
+		
 		};
 		for(int i = 0; i < points.length; i++) {
 			s = new Slugger(tileMap);
@@ -74,7 +77,9 @@ public class Level1State extends GameState {
 	}
 	
 	public void update() {
-		
+	if(player.intersects(d))gsm.setState(3);
+		if((240-player.gety())<15)player.setDead(true);
+		if(player.isDead())gsm.setState(2);
 		// update player
 		player.update();
 		tileMap.setPosition(
@@ -115,7 +120,7 @@ public class Level1State extends GameState {
 		
 		// draw bg
 		bg.draw(g);
-		
+		d.draw(g);
 		// draw tilemap
 		tileMap.draw(g);
 		

@@ -16,7 +16,15 @@ public class Player extends MapObject {
 	private int maxHealth;
 	private int fire;
 	private int maxFire;
+	public boolean isDead() {
+		return dead;
+	}
+
 	private boolean dead;
+	public void setDead(boolean dead) {
+		this.dead = dead;
+	}
+
 	private boolean flinching;
 	private long flinchTimer;
 	
@@ -273,6 +281,7 @@ public class Player extends MapObject {
 		// update position
 		getNextPosition();
 		checkTileMapCollision();
+	
 		setPosition(xtemp, ytemp);
 		
 		// check attack has stopped
