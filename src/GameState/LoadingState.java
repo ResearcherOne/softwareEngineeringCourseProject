@@ -67,7 +67,7 @@ public class LoadingState extends GameState {
 	}
 	
 	private void select() {
-		gsm.setState(4);
+		gsm.setState(GameStateManager.LEVEL2STATE);
 		
 		
 	}

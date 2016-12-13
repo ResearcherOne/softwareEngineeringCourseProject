@@ -1,10 +1,6 @@
 package Audio;
 
-import java.io.File;
-import java.net.URL;
-
 import javax.sound.sampled.*;
-
 
 public class AudioPlayer {
 	
@@ -13,12 +9,14 @@ public class AudioPlayer {
 	public AudioPlayer(String s) {
 		
 		try {
-			URL url = getClass().getResource(s);
-			File f = new File(url.getPath());
 			
-	        AudioInputStream audio = AudioSystem.getAudioInputStream(f);
-	        AudioFormat format = audio.getFormat();
-	        AudioFormat baseFormat = audio.getFormat();
+			AudioInputStream ais =
+				AudioSystem.getAudioInputStream(
+					getClass().getResourceAsStream(
+						s
+					)
+				);
+			AudioFormat baseFormat = ais.getFormat();
 			AudioFormat decodeFormat = new AudioFormat(
 				AudioFormat.Encoding.PCM_SIGNED,
 				baseFormat.getSampleRate(),
@@ -30,14 +28,15 @@ public class AudioPlayer {
 			);
 			AudioInputStream dais =
 				AudioSystem.getAudioInputStream(
-					f);
+					decodeFormat, ais);
 			clip = AudioSystem.getClip();
 			clip.open(dais);
-	    } catch (Exception E) {
-	        System.out.println("Exception: "+E.getMessage());
-	    }
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
-
 	
 	public void play() {
 		if(clip == null) return;

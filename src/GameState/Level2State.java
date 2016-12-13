@@ -4,28 +4,25 @@ import Main.GamePanel;
 import TileMap.*;
 import Entity.*;
 import Entity.Enemies.*;
-import Audio.AudioPlayer;
+
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-public class Level1State extends GameState {
+public class Level2State extends GameState {
 	
 	private TileMap tileMap;
 	private Background bg;
-	public static int points=0; 
-	public static int Leaderboards=0;
+	
 	private Player player;
 	private Door d ;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Explosion> explosions;
 	
 	private HUD hud;
-	
-	public static AudioPlayer bgMusic;
-	
-	public Level1State(GameStateManager gsm) {
+
+	public Level2State(GameStateManager gsm) {
 		this.gsm = gsm;
 		init();
 	}
@@ -34,7 +31,7 @@ public class Level1State extends GameState {
 		
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/Tilesets/grasstileset.gif");
-		tileMap.loadMap("/Maps/level1-1.map");
+		tileMap.loadMap("/Maps/Levell.map");
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(1);
 		
@@ -49,25 +46,19 @@ public class Level1State extends GameState {
 		
 		hud = new HUD(player);
 		
-		bgMusic = new AudioPlayer("/Music/level1-1.mp3");		
-		
-		bgMusic.play();
-		
+	
 	}
 	
 	private void populateEnemies() {
 		
 		enemies = new ArrayList<Enemy>();
 		 d =new Door(tileMap);
-		d.setPosition(3145,180);
+		d.setPosition(3545,180);
 	
 		Slugger s;
 		Point[] points = new Point[] {
 			new Point(200, 100),
-			new Point(860, 200),
-			new Point(1525, 200),
-			new Point(1680, 200),
-			new Point(1800, 200)
+		
 		
 		};
 		for(int i = 0; i < points.length; i++) {
@@ -79,13 +70,12 @@ public class Level1State extends GameState {
 	}
 	
 	public void update() {
-	if(player.intersects(d)){points=points+player.getHealth()*5;
-		gsm.setState(3);};
+	if(player.intersects(d))gsm.setState(3);
 		if((240-player.gety())<15)player.setDead(true);
-		if(player.isDead()){bgMusic.close();
-			Leaderboards=points;
-		points=0;
-		gsm.setState(2);}
+		if(player.isDead()){Level1State.Leaderboards=Level1State.points;
+		Level1State.points=0;
+			Level1State.bgMusic.close();
+			gsm.setState(2);}
 		// update player
 		player.update();
 		tileMap.setPosition(
@@ -105,7 +95,6 @@ public class Level1State extends GameState {
 			e.update();
 			if(e.isDead()) {
 				enemies.remove(i);
-				points=points+5;
 				i--;
 				explosions.add(
 					new Explosion(e.getx(), e.gety()));
@@ -130,7 +119,7 @@ public class Level1State extends GameState {
 		d.draw(g);
 		// draw tilemap
 		tileMap.draw(g);
-		g.drawString("Points ="+points, 250, 20);
+		g.drawString("Points ="+Level1State.points, 250, 20);
 		// draw player
 		player.draw(g);
 		
@@ -172,6 +161,11 @@ public class Level1State extends GameState {
 	}
 	
 }
+
+
+
+
+
 
 
 

@@ -78,11 +78,11 @@ public class Player extends MapObject {
 		
 		facingRight = true;
 		
-		health = maxHealth = 25;
+		health = maxHealth = 5;
 		fire = maxFire = 2500;
 		
-		fireCost = 100;
-		fireBallDamage = 2;
+		fireCost = 200;
+		fireBallDamage = 5;
 		fireBalls = new ArrayList<FireBall>();
 		
 		scratchDamage = 8;
@@ -139,8 +139,8 @@ public class Player extends MapObject {
 		animation.setDelay(400);
 		
 		sfx = new HashMap<String, AudioPlayer>();
-		sfx.put("jump", new AudioPlayer("jump.wav"));
-		sfx.put("scratch", new AudioPlayer("scratch.wav"));
+		sfx.put("jump", new AudioPlayer("/SFX/jump.mp3"));
+		sfx.put("scratch", new AudioPlayer("/SFX/scratch.mp3"));
 		
 	}
 	
