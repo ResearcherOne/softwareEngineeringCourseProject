@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/ResearcherOne/softwareEngineeringCourseProject#readme",
   "devDependencies": {
+    "async": "^2.1.4",
     "mocha": "^3.2.0",
     "mongo-crud-layer": "^2.0.2",
     "should": "^11.1.2"
