@@ -49,15 +49,16 @@ function getScoreCollectionAsArray(callback) {
 }
 
 function populateRandomScoreObjects(objectCount,callback){//Here, the point is to call the callback when all funcs are completed.
-  var randomInt = generateRandomInt (0, 99999);
+  var randomInt = generateRandomInt (-1000, 1000);
   var completedCallCount = 0;
   for (var i = 0; i < objectCount; i++) {
     var j = i + randomInt;
+    var absJ = Math.abs(j);
     var scoreObj = {
-        "userName": "birkan"+j.toString(),
+        "userName": "birkan"+absJ.toString(),
         "score": j,
         "dateInMillis": new Date().getTime(),
-        "clientId": j
+        "clientId": absJ
     };
     mongocrud.create(scoreObj, testCollection, function(err, id) {
       var isSucceed = false;
@@ -98,9 +99,7 @@ describe('mongoModule.js', function(){
     it("should insert score object", function(done){
       mongoModule.saveScore(userName, score, dateInMillis, clientId, function(err, result){
         mongocrud.read({ "clientId": clientId }, testCollection, function(err, doc) {
-            console.log(JSON.stringify(doc)); // { _id: 55617c9226d7023b19edcdd1, name: "Athyrion" } 
-            //should.not.exist(err);
-            should.not.exist({"yo":"aha"});
+            should.not.exist(err);
             done();
         });
       });
@@ -169,7 +168,7 @@ describe('mongoModule.js', function(){
       });
     });
   });
-  describe('getTopTenList()', function(){
+  describe('getTopTenList(callback)', function(){
     var mockScoreObj = {
       "userName": "birkan",
       "score": 1000,
@@ -184,7 +183,7 @@ describe('mongoModule.js', function(){
             should.not.exist(err);
             should.exist(result);
             result.should.be.an.Array();
-            result.length.should.be.equal(11);
+            result.length.should.be.equal(10);
             done();
           });
         } else {
@@ -193,6 +192,21 @@ describe('mongoModule.js', function(){
       });
     });
     it("should return an array with x object if collection document count x <= 10", function(done){
+      populateRandomScoreObjects(1,function(err, isSucceed){
+        if (!err) {
+          mongoModule.getTopTenList(function(err, result){
+            should.not.exist(err);
+            should.exist(result);
+            result.should.be.an.Array();
+            result.length.should.be.equal(1);
+            done();
+          });
+        } else {
+          throw new Error(err);
+        }
+      });
+    });
+    it("should return an sorted array with top score start at index 0", function(done){
       populateRandomScoreObjects(3,function(err, isSucceed){
         if (!err) {
           mongoModule.getTopTenList(function(err, result){
@@ -200,6 +214,8 @@ describe('mongoModule.js', function(){
             should.exist(result);
             result.should.be.an.Array();
             result.length.should.be.equal(3);
+            result[1].score.should.be.belowOrEqual(result[0].score);
+            result[2].score.should.be.belowOrEqual(result[1].score);
             done();
           });
         } else {
@@ -208,7 +224,7 @@ describe('mongoModule.js', function(){
       });
     });
   });
-  describe('clearAllScores()', function(){
+  describe('clearAllScores(callback)', function(){
     it("should return array with zero length", function(done){
       populateRandomScoreObjects(3,function(err, isSucceed){
         if (!err) {
