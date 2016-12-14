@@ -1,11 +1,13 @@
 package Entity.Enemies;
+
 import Entity.*;
 import TileMap.TileMap;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.awt.Graphics2D;
-import java.awt.Point;
 
 import javax.imageio.ImageIO;
 
@@ -21,10 +23,10 @@ public class Boss extends Enemy{
 		fallSpeed = 0.2;
 		maxFallSpeed = 10.0;
 		
-		width = 30;
-		height = 30;
+		width = 60;
+		height = 60;
 		cwidth = 20;
-		cheight = 20;
+		cheight = 40;
 		
 		health = maxHealth = 200;
 		damage = 5;
@@ -33,9 +35,10 @@ public class Boss extends Enemy{
 		try {
 			
 			BufferedImage spritesheet = ImageIO.read(
-				getClass().getResourceAsStream(
-					"/Sprites/Enemies/slugger.gif"
-				)
+					getClass().getResourceAsStream(
+							"/Sprites/Enemies/boss1.gif"
+						)
+					
 			);
 			
 			sprites = new BufferedImage[3];
@@ -50,7 +53,7 @@ public class Boss extends Enemy{
 			
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			System.out.println("Exception: "+e.getMessage());
 		}
 		
 		animation = new Animation();
@@ -59,6 +62,8 @@ public class Boss extends Enemy{
 		
 		right = true;
 		facingRight = true;
+
+		
 	}
 	
 	private void getNextPosition() {
@@ -117,20 +122,7 @@ public class Boss extends Enemy{
 	
 	
 	
-	public void spawnSlugger(){
-		try {
-			while(health > 0){
-				Thread.sleep(5000);			//spawn slugger every 5 sec.
-				Slugger s = new Slugger(tileMap);
-				s.setPosition(dx + 100, dy + 100);
-				System.out.println("Running");
-			}
-		} catch(InterruptedException ex) {
-		    Thread.currentThread().interrupt();
-		}
 
-	}
-	
 	public void draw(Graphics2D g) {
 		
 		//if(notOnScreen()) return;
