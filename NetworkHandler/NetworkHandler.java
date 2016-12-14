@@ -6,6 +6,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class NetworkHandler {
 	public static String USER_AGENT = "Mozilla/5.0";
 	public static String GET_URL = "https://google.com";
@@ -13,7 +17,7 @@ public class NetworkHandler {
 	public static String POST_PARAMS = "userName=Umut";
 
 	// Argument GET_URL added for test purpose.
-	static String sendGET(String GET_URL) throws IOException {
+	static String sendGET(String GET_URL) throws IOException, JSONException {
 		// Check URL is valid or not.
 		if (isValidURL(GET_URL)) {
 			try {
@@ -32,7 +36,9 @@ public class NetworkHandler {
 						response.append(inputLine);
 					}
 					in.close();
-
+					// Convert to json object and get specified data from it. Then you can print if the response is json type.
+					String list = getList(response.toString());
+					System.out.println(list);
 					// print result
 					System.out.println(response.toString());
 					return "GET request worked"; // Added for testing.
@@ -48,6 +54,11 @@ public class NetworkHandler {
 		} else {
 			return "URL is not valid.";
 		}
+	}
+
+	private static String getList(String responseString) throws JSONException {
+		JSONObject array = new JSONObject(responseString);
+		return array.getString("url");
 	}
 
 	// Argument POST_URL added for test purpose.

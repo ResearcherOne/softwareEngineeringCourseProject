@@ -1,3 +1,4 @@
+import org.json.JSONException;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
@@ -6,25 +7,25 @@ import java.io.IOException;
 public class NetworkHandlerTest {
 
 	@Test
-	public void testGetRequest() throws IOException {
-		assertEquals("GET request worked", NetworkHandler.sendGET("https://google.com")); //URL form is valid, request is accepted. Https connection.
-		assertEquals("GET request worked", NetworkHandler.sendGET("http://google.com")); // URL form is valid, request is accepted. Http connection.	
+	public void testGetRequest() throws IOException, JSONException {
+		assertEquals("GET request worked", NetworkHandler.sendGET("https://httpbin.org/get")); //URL form is valid, request is accepted. Https connection.
+		assertEquals("GET request worked", NetworkHandler.sendGET("http://httpbin.org/get")); // URL form is valid, request is accepted. Http connection.	
 	}
 	
 	@Test
-	public void testGetRequest1() throws IOException {
+	public void testGetRequest1() throws IOException, JSONException {
 		assertEquals("GET request not worked", NetworkHandler.sendGET("https://httpbin.org/post")); //URL form is valid, but request is denied. Https connection.
 		assertEquals("GET request not worked", NetworkHandler.sendGET("http://httpbin.org/post"));  //URL form is valid, but request is denied. Http connection.
 	}
 	
 	@Test
-	public void testGetRequest2() throws IOException {
+	public void testGetRequest2() throws IOException, JSONException {
 		assertEquals("URL is valid but connection could not be established.", NetworkHandler.sendGET("http://weqwrwrqweqwe.com/")); //URL form is valid, but does not exist. Https connection.
 		assertEquals("URL is valid but connection could not be established.", NetworkHandler.sendGET("http://weqwrwrqweqwe.com/")); //URL form is valid, but does not exist. Http connection.
 	}
 	
 	@Test
-	public void testGetRequest3() throws IOException {
+	public void testGetRequest3() throws IOException, JSONException {
 		assertEquals("URL is not valid.", NetworkHandler.sendGET("nothing")); //URL form is not valid.
 	}
 
