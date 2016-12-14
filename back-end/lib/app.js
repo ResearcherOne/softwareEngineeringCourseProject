@@ -12,18 +12,13 @@ app.get('/toptenlist.json', function (req, res) {
     res.json({"toptenlist":result});
   });
 });
-
-app.get('/savescore', function (req, res) {
-  mongoModule.saveScore("umut", 15, 550, 110, function(err, result){
-    res.send("saved");
-  });
-});
-
-app.post('/savescore', parseUrlencoded, function (req, res) {
-  var newScore = request.body;
-  console.log("ClientId: "+newScore.clientId.toString());
-  mongoModule.saveScore("umut", 15, 550, 110, function(err, result){
-    res.send("saved");
+// userName, score, dateInMillis, clientId
+app.get('/savescore/:scoredata', function (req, res) { // .../savescore/username,score,clientId
+  var scoredata       = req.params.scoredata;
+  var receivedParams  = scoredata.split(",");
+  console.log("username: "+receivedParams[0]+" score: "+ receivedParams[1]+" clietnId: "+receivedParams[2]);
+  mongoModule.saveScore(receivedParams[0], parseInt(receivedParams[1]), new Date().getTime(), parseInt(receivedParams[2]), function(err, result){
+    res.send("username: "+receivedParams[0]+" score: "+ receivedParams[1]+" clietnId: "+receivedParams[2]);
   });
 });
 

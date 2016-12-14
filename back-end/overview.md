@@ -24,6 +24,12 @@ Data Structure
 		{"username": "birkan", "score":500, "date":1231231231, "client_id": 5124123123}
 		{"username": "birkan", "score":500, "date":1231231231}
 		{"username": "birkan", "score":500, "date":1231231231}
+		var scoreObj = {
+          "userName": userName,
+          "score": score,
+          "dateInMillis": dateInMillis,
+          "clientId": clientId
+      };
 		
 mongo-crud-layer
 	add remove (in addition to single document remove)
