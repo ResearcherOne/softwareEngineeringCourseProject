@@ -3,7 +3,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
+import java.net.NetworkInterface;
 import java.net.URL;
 
 import org.json.JSONArray;
@@ -14,7 +16,9 @@ public class NetworkHandler {
 	public static String USER_AGENT = "Mozilla/5.0";
 	public static String GET_URL = "https://google.com";
 	public static String POST_URL = "https://google.com";
-	public static String POST_PARAMS = "userName=Umut";
+	public static String USER_PARAMS = "userName=Umut";
+	public static String SCORE_PARAMS = "gameScore=500";
+	public static String CLIENT_PARAMS = "clientId=1234";
 
 	// Argument GET_URL added for test purpose.
 	static String sendGET(String GET_URL) throws IOException, JSONException {
@@ -57,6 +61,7 @@ public class NetworkHandler {
 	}
 
 	private static String getList(String responseString) throws JSONException {
+		//Get specific field from response string.
 		JSONObject array = new JSONObject(responseString);
 		return array.getString("url");
 	}
@@ -66,6 +71,7 @@ public class NetworkHandler {
 		// Check URL is valid or not.
 		if (isValidURL(POST_URL)) {
 			try {
+				//Initial connection
 				URL obj = new URL(POST_URL);
 				HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 				con.setRequestMethod("POST");
@@ -74,7 +80,25 @@ public class NetworkHandler {
 				// For POST only - START
 				con.setDoOutput(true);
 				OutputStream os = con.getOutputStream();
-				os.write(POST_PARAMS.getBytes());
+				JSONArray array = new JSONArray();
+				
+				//Get Mac Adress.
+				InetAddress ip = InetAddress.getLocalHost();
+				NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+				byte[] mac = network.getHardwareAddress();
+				StringBuilder macString = new StringBuilder();
+				for (int i = 0; i < mac.length; i++) {
+					macString.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
+				}
+				//Send mac address as parameter.
+				CLIENT_PARAMS = macString.toString();
+				
+				//Send Params.
+				array.put(USER_PARAMS);
+				array.put(SCORE_PARAMS);
+				array.put(CLIENT_PARAMS);
+				os.write(array.toString().getBytes());
+
 				os.flush();
 				os.close();
 				// For POST only - END
